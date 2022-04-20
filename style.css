@@ -283,6 +283,21 @@ body {
     color: #BABABA;
 }
 
+textarea {
+    outline: none;
+    border: 1px solid #D1D1D1;
+    border-radius: 5px;
+    padding: 12px 23px;
+    font-size: 19px;
+    margin-top: 10px;
+    height: 177px;
+}
+
+textarea::placeholder {
+    font-style: italic;
+    color: #BABABA;
+}
+
 .quiz-creation button {
     background-color: #EC362D;
     border-radius: 20px;
@@ -445,6 +460,14 @@ button.back-home {
         margin-top: 30px;
         font-size: 18px;
         border-radius: 15px;
+    }
+
+    .form-box {
+        margin-bottom: 0;
+    }
+
+    .page-form .quizz {
+        margin-bottom: 0;
     }
 
     button.back-home {
