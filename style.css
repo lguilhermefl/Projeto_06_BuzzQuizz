@@ -125,6 +125,10 @@ body {
     align-items: center;
 }
 
+.quizz-details > p {
+    margin-top: 20px;
+}
+
 .quizz-top {
     width: 100%;
     position: relative;
@@ -134,7 +138,7 @@ body {
     justify-content: center;
     align-items: center;
     border-radius: 0;
-    background: rgba(0, 0, 0, 0.57);
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .quizz-top img {
