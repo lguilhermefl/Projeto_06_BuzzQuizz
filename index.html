@@ -15,7 +15,7 @@
         <div class="top">
             <h1>BuzzQuizz</h1>
         </div>
-        <div class="content">
+        <div class="quizzes-list hidden">
             <div class="create-quizz">
                 <p>Você não criou nenhum quizz ainda :(</p>
                 <button>Criar Quizz</button>
@@ -70,6 +70,87 @@
                 </div>
             </div>
         </div>
+
+        <!-- INICIO TELA DO QUIZZ -->
+        <div class="quizz-details">
+            <div class="quizz-top">
+                <img src="img/deferias.jpg">
+                <div class="overlay">
+                    <h2>Acerte os personagens corretos dos Simpsons e prove seu amor!</h2>
+                </div>
+            </div>
+
+            <ul class="questions">
+                <li class="question">
+                    <div class="question-top">
+                        Em qual animal Olho-Tonto Moody transfigurou Malfoy?
+                    </div>
+
+                    <ul class="answers">
+                        <li class="answer disabled incorrect">
+                            <img src="img/deferias.jpg">
+                            <h3>Gatíneo</h3>
+                        </li>
+                        <li class="answer disabled incorrect">
+                            <img src="img/deferias.jpg">
+                            <h3>Ratata</h3>
+                        </li>
+                        <li class="answer disabled incorrect">
+                            <img src="img/deferias.jpg">
+                            <h3>Sapo gordo</h3>
+                        </li>
+                        <li class="answer correct">
+                            <img src="img/deferias.jpg">
+                            <h3>Sei la</h3>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="question">
+                    <div class="question-top">
+                        Em qual animal Olho-Tonto Moody transfigurou Malfoy?
+                    </div>
+
+                    <ul class="answers">
+                        <li class="answer">
+                            <img src="img/deferias.jpg">
+                            <h3>Gatíneo</h3>
+                        </li>
+                        <li class="answer">
+                            <img src="img/deferias.jpg">
+                            <h3>Ratata</h3>
+                        </li>
+                        <li class="answer">
+                            <img src="img/deferias.jpg">
+                            <h3>Sapo gordo</h3>
+                        </li>
+                        <li class="answer">
+                            <img src="img/deferias.jpg">
+                            <h3>Sei la</h3>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="question result">
+                    <div class="question-top">
+                        88% de acerto: Você é praticamente um aluno de Hogwarts!
+                    </div>
+
+                    <div class="result-details">
+                        <img src="img/deferias.jpg">
+                        <p>
+                            Parabéns Potterhead! Bem-vindx a Hogwarts, aproveite o loop infinito de comida e clique no botão abaixo para usar o vira-tempo e reiniciar este teste.
+                        </p>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="end-buttons">
+                <button class="primary">Reiniciar Quizz</button>
+                <button class="secondary">Voltar pra home</button>
+            </div>
+        </div>
+        <!-- FIM TELA DO QUIZZ -->
     </div>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
