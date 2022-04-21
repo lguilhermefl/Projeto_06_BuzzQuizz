@@ -126,7 +126,7 @@ body {
 }
 
 .quizz-details > p {
-    margin-top: 20px;
+    margin: 20px 0;
 }
 
 .quizz-top {
@@ -192,6 +192,10 @@ body {
     margin-bottom: 18px;
 }
 
+.answer:hover {
+    cursor: pointer;
+}
+
 .answer img {
     width: 100%;
     height: 175px;
@@ -206,6 +210,11 @@ body {
 
 .answer.disabled {
     opacity: 30%;
+}
+
+.answer.disabled:hover,
+.answer.selected:hover {
+    cursor: default;
 }
 
 .answer.incorrect h3 {
