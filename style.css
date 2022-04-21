@@ -111,6 +111,7 @@ ion-icon:hover {
 }
 
 .overlay {
+    word-break: break-word;
     position: absolute;
     left: 0;
     top: 0;
@@ -126,8 +127,7 @@ ion-icon:hover {
 .title {
     font-size: 19px;
     color: #fff;
-    margin-bottom: 17px;
-    margin-left: 17px;
+    margin: 0 17px 17px;
     line-height: 22px;
 }
 
