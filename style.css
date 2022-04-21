@@ -5,6 +5,14 @@ body {
     background-color: #fafafa;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
+ion-icon:hover {
+    cursor: pointer;
+}
+
 .top {
     width: 100%;
     background-color: #EC362D;
@@ -249,10 +257,6 @@ body {
     border: none;
 }
 
-.end-buttons button:hover {
-    cursor: pointer;
-}
-
 .end-buttons .primary {
     background-color: #EC362D;
     border-radius: 15px;
@@ -269,7 +273,7 @@ body {
 
 /* CRIAÇÃO DO QUIZZ */
 
-.quiz-creation input {
+.quizz-creation input {
     outline: none;
     border: 1px solid #D1D1D1;
     border-radius: 5px;
@@ -278,7 +282,7 @@ body {
     margin-top: 10px;
 }
 
-.quiz-creation input::placeholder {
+.quizz-creation input::placeholder {
     font-style: italic;
     color: #BABABA;
 }
@@ -298,7 +302,7 @@ textarea::placeholder {
     color: #BABABA;
 }
 
-.quiz-creation button {
+.quizz-creation button {
     background-color: #EC362D;
     border-radius: 20px;
     padding: 10px 40px;
@@ -308,17 +312,13 @@ textarea::placeholder {
     margin-top: 45px;
 }
 
-.quiz-creation button:hover {
-    cursor: pointer;
-}
-
-.quiz-creation span {
+.quizz-creation span {
     font-size: 23px;
     font-weight: 700;
     color: #000;
 }
 
-.quiz-creation div:first-child input:first-child {
+.quizz-creation div:first-child input:first-child {
     margin-top: 0;
 }
 
@@ -354,15 +354,18 @@ textarea::placeholder {
     font-size: 20px;
 }
 
+.form-box img {
+    cursor: pointer;
+}
+
 .edit-entry {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.edit-entry ion-icon {
-    font-size: 23px;
-    color: #000;
+.edit-entry img {
+    height: 23px;
 }
 
 .fields {
@@ -456,7 +459,7 @@ button.back-home {
         margin: 35px auto;
     }
 
-    .quiz-creation button {
+    .quizz-creation button {
         margin-top: 30px;
         font-size: 18px;
         border-radius: 15px;

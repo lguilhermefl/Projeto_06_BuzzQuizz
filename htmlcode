@@ -1,0 +1,66 @@
+<div class="page-form">
+    <span>Crie suas perguntas</span>
+    <div class="form-box">
+        <div class="edit-entry">
+            <span>Pergunta 1</span>
+            <img src="img/edit.svg" alt="edit" onclick="edit(this)">
+        </div>
+        <div class="fields">
+            <div>
+                <input type="text" placeholder="Texto da pergunta">
+                <input type="text" placeholder="Cor de fundo da pergunta">
+            </div>
+            <div>
+                <span>Resposta Correta</span>
+                <input type="text" placeholder="Resposta correta">
+                <input type="text" placeholder="URL da imagem">
+            </div>
+            <div>
+                <span>Respostas Incorretas</span>
+                <div>
+                    <input type="text" placeholder="Resposta incorreta 1">
+                    <input type="text" placeholder="URL da imagem 1">
+                </div>
+                <div>
+                    <input type="text" placeholder="Resposta incorreta 2">
+                    <input type="text" placeholder="URL da imagem 2">
+                </div>
+                <div>
+                    <input type="text" placeholder="Resposta incorreta 3">
+                    <input type="text" placeholder="URL da imagem 3">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <button onclick="goToCreateLevels()">Prosseguir para criar níveis</button>
+</div>
+<div class="page-form">
+    <span>Agora, decida os níveis</span>
+    <div class="form-box">
+        <div class="edit-entry">
+            <span>Nível 1</span>
+            <img src="img/edit.svg" alt="edit" onclick="edit(this)">
+        </div>
+        <div class="fields">
+            <input type="text" placeholder="Título do nível">
+            <input type="text" placeholder="% de acerto mínima">
+            <input type="text" placeholder="URL da imagem do nível">
+            <textarea type="text" placeholder="Descrição do nível"></textarea>
+        </div>
+    </div>
+    <button>Finalizar Quizz</button>
+</div>
+<div class="page-form">
+    <span>Seu quizz está pronto!</span>
+    <div class="quizz-finished">
+        <div class="quizz">
+            <img src="img/deferias.jpg" />
+            <div class="overlay">
+                <h4 class="title">Acerte os personagens corretos dos Simpsons e prove seu amor!</h4>
+            </div>
+        </div>
+    </div>
+    <button>Acessar Quizz</button>
+    <button class="back-home">Voltar para home</button>
+</div>
