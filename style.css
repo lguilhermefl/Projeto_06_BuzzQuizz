@@ -95,13 +95,19 @@ ion-icon:hover {
 
 .quizz {
     width: 32.5%;
+    margin-bottom: 15px;
     position: relative;
+}
+
+.quizz:hover {
+    cursor: pointer;
 }
 
 .quizz img {
     width: 100%;
     border-radius: 5px;
-    
+    height: 181px;
+    object-fit: cover;
 }
 
 .overlay {
@@ -133,6 +139,10 @@ ion-icon:hover {
     align-items: center;
 }
 
+.quizz-details > p {
+    margin: 20px 0;
+}
+
 .quizz-top {
     width: 100%;
     position: relative;
@@ -142,7 +152,7 @@ ion-icon:hover {
     justify-content: center;
     align-items: center;
     border-radius: 0;
-    background: rgba(0, 0, 0, 0.57);
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .quizz-top img {
@@ -196,6 +206,10 @@ ion-icon:hover {
     margin-bottom: 18px;
 }
 
+.answer:hover {
+    cursor: pointer;
+}
+
 .answer img {
     width: 100%;
     height: 175px;
@@ -210,6 +224,11 @@ ion-icon:hover {
 
 .answer.disabled {
     opacity: 30%;
+}
+
+.answer.disabled:hover,
+.answer.selected:hover {
+    cursor: default;
 }
 
 .answer.incorrect h3 {
@@ -247,7 +266,7 @@ ion-icon:hover {
 .end-buttons {
     display: flex;
     flex-direction: column;
-    margin-top: 58px 0 86px 0;
+    margin: 58px 0 86px 0;
 }
 
 .end-buttons button {
@@ -404,7 +423,6 @@ button.back-home {
     }
     .quizz {
         width: 100%;
-        margin-bottom: 15px;
     }
     .your-quizzes {
         margin-top: 35px;
