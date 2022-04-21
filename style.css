@@ -89,7 +89,7 @@ ion-icon:hover {
 .quizzes {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 1.25%;
     margin-top: 10px;
 }
 
@@ -166,7 +166,7 @@ ion-icon:hover {
     margin: 0 10px;
     text-align: center;
     color: #fff;
-    word-break: break-all;
+    word-break: break-word;
 }
 
 .questions {
@@ -192,7 +192,9 @@ ion-icon:hover {
     background-color: #434CA0;
     margin-bottom: 20px;
     text-align: center;
-    word-break: break-all;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    padding: 15px;
 }
 
 .answers {
@@ -200,6 +202,10 @@ ion-icon:hover {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+}
+
+.answers h3 {
+    word-break: break-word;
 }
 
 .answer {
@@ -263,7 +269,7 @@ ion-icon:hover {
     font-size: 18px;
     line-height: 25px;
     color: #484848;
-    word-break: break-all;
+    word-break: break-word;
 }
 
 .end-buttons {
@@ -411,6 +417,14 @@ textarea::placeholder {
     margin-bottom: 0;
 }
 
+.quizz-finished {
+    width: 100%;
+}
+
+.quizz-finished .quizz img {
+    height: 100%;
+}
+
 button.back-home {
     margin-top: 10px;
     background-color: #fafafa;
@@ -433,6 +447,9 @@ button.back-home {
     }
     .create-quizz {
         margin-bottom: 35px;
+    }
+    .quizzes {
+        gap: unset;
     }
 
     /* tela do quizz */

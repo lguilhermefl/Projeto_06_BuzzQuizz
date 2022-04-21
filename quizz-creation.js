@@ -9,6 +9,7 @@ let quizz = {
     questions: "",
     levels: ""
 };
+let userQuizzesIdList = [];
 
 let elQuizzRules;
 let elQuizzQuestions;
@@ -48,6 +49,13 @@ function backHome() {
 
 function loadQuizzRules() {
     const elContainer = document.querySelector(".container");
+    quizz = {
+        title: "",
+        image: "",
+        questions: "",
+        levels: ""
+    };
+
     elContainer.innerHTML += `
         <div class="quizz-creation">
             <div class="page-form">
@@ -153,9 +161,14 @@ function loadLevels() {
 
 }
 
-function loadQuizzFinished() {
+function loadQuizzFinished(response) {
 
     const elQuizzCreation = document.querySelector(".quizz-creation");
+    elQuizzLevels = document.querySelector(".quizz-creation .page-form:nth-child(3)");
+    getUserQuizz(response);
+    const index = userQuizzesIdList.length - 1;
+    const idQuizzCreated = userQuizzesIdList[index];
+
     elQuizzCreation.innerHTML += `
         <div class="page-form hidden">
             <span>Seu quizz está pronto!</span>
@@ -167,22 +180,18 @@ function loadQuizzFinished() {
                     </div>
                 </div>
             </div>
-            <button>Acessar Quizz</button>
+            <button onclick="getQuizzDetails(${idQuizzCreated})">Acessar Quizz</button>
             <button class="back-home" onclick="backHome()">Voltar para home</button>
         </div>
         `;
     elQuizzFinished = elQuizzCreation.querySelector(".page-form:nth-child(4)");
+    elQuizzLevels = document.querySelector(".quizz-creation .page-form:nth-child(3)");
+    elQuizzLevels.classList.add("hidden");
+    elQuizzFinished.classList.remove("hidden");
 
 }
 
 function goToCreateQuestions() {
-    
-    quizz = {
-        title: "",
-        image: "",
-        questions: "",
-        levels: ""
-    };
 
     elQuizzRules = document.querySelector(".quizz-creation .page-form:nth-child(1)");
     const titleQuizz = elQuizzRules.querySelector("input:nth-child(1)").value;
@@ -353,11 +362,24 @@ function finishQuizz() {
 
     if((levels.length === qtyLevels) && (aux !== 0)) {
         quizz.levels = levels;
-        loadQuizzFinished();
-        elQuizzLevels = document.querySelector(".quizz-creation .page-form:nth-child(3)");
-        elQuizzLevels.classList.add("hidden");
-        elQuizzFinished.classList.remove("hidden");
+        sendQuizz();
     } else {
         alert("Preencha os dados corretamente por favor!");
     }
+}
+
+function sendQuizz() {
+    const promise = axios.post(API, quizz);
+    promise.then(loadQuizzFinished);
+}
+
+function getUserQuizz(response) {
+    const quizzId = response.data.id;
+    let idListLocal = JSON.parse(localStorage.getItem("userQuizzIds"));
+    if(idListLocal !== null) {
+        userQuizzesIdList = idListLocal;
+    }
+    userQuizzesIdList.push(quizzId);
+    
+    localStorage.setItem("userQuizzIds", JSON.stringify(userQuizzesIdList));
 }
