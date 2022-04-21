@@ -134,17 +134,6 @@ function getAnswersTemplate(question) {
     `).join('');
 }
 
-function getQuestionByTitle(questionTitle) {
-    let currentQuestion = null;
-    currentQuizz.questions.forEach(question => {
-        if(question.title === questionTitle) {
-            currentQuestion = question;
-        }
-    });
-
-    return currentQuestion;
-}
-
 function isCorrect(answerEl, question) {
     const answerIndex = answerEl.dataset.index;
 
