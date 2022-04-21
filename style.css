@@ -192,7 +192,9 @@ ion-icon:hover {
     background-color: #434CA0;
     margin-bottom: 20px;
     text-align: center;
+    overflow-wrap: break-word;
     word-break: break-all;
+    padding: 15px;
 }
 
 .answers {
@@ -200,6 +202,10 @@ ion-icon:hover {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+}
+
+.answers h3 {
+    word-break: break-all;
 }
 
 .answer {
@@ -445,7 +451,7 @@ button.back-home {
     .quizzes {
         gap: unset;
     }
-    
+
     /* tela do quizz */
     .quizz-top h2 {
         font-size: 18px;
