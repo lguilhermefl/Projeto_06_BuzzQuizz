@@ -22,11 +22,32 @@ function renderQuizzesInElement(quizzess, element) {
     element.innerHTML = quizzesTemplate;
 }
 
+const getUserQuizzes = (userQuizzesIds, quizzes) => quizzes.filter(quizz => userQuizzesIds.includes(quizz.id));
+
+const getAllQuizzes = (userQuizzIds, quizzes) => quizzes.filter(quizz => !userQuizzIds.includes(quizz.id));
+
 function getQuizzes() {
     axios
         .get(`${API_URL}/quizzes`)
         .then(response => {
-            renderQuizzesInElement(response.data, document.querySelector('.all-quizzes .quizzes'));
+            let userQuizzIds = JSON.parse(localStorage.getItem("userQuizzIds"));
+
+            if(!userQuizzIds) {
+                userQuizzIds = [];
+            }
+
+            if(userQuizzIds.length > 0) {
+                document.querySelector('.create-quizz').classList.add('hidden');
+                document.querySelector('.your-quizzes').classList.remove('hidden');
+            }
+
+            const quizzes = response.data;
+
+            const userQuizzes = getUserQuizzes(userQuizzIds, quizzes);
+            const allQuizzes = getAllQuizzes(userQuizzIds, quizzes);
+
+            renderQuizzesInElement(userQuizzes, document.querySelector('.your-quizzes .quizzes'));
+            renderQuizzesInElement(allQuizzes, document.querySelector('.all-quizzes .quizzes'));
         })
         .catch(() => {
             document.querySelector('.quizzes-list').innerHTML = `<p>Não foi possível obter a lista de quizzes</p>`;
@@ -40,6 +61,10 @@ function openQuizzDetails() {
 
 function getQuizzDetails(idQuizz) {
     openQuizzDetails();
+
+    qtyAnswers = 0;
+    qtyCorrectAnswers = 0;
+    score = 0;
 
     const loadingMessage = document.querySelector('.quizz-details .loading-message');
     loadingMessage.classList.remove('hidden');
