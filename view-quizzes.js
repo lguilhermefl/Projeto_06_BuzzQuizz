@@ -91,9 +91,9 @@ function renderQuizzTop(image, title) {
 }
 
 function renderQuizzQuestions(questions) {
-    const quizzQuestionsTemplate = questions.map(question => {
+    const quizzQuestionsTemplate = questions.map((question, index) => {
         return `
-            <li class="question">
+            <li class="question" data-index="${index}">
                 <div class="question-top" style="background-color: ${question.color};">
                     ${question.title}
                 </div>
@@ -123,10 +123,11 @@ function comparator() {
 }
 
 function getAnswersTemplate(question) {
-    const shuffledAnswers = shuffleArray(question.answers);
+    const answersWithIndex = question.answers.map((answer, index) => ({ ...answer, originalIndex: index }));
+    const shuffledAnswers = shuffleArray(answersWithIndex);
 
     return shuffledAnswers.map(answer => `
-        <li class="answer" onClick="selectAnswer(this)">
+        <li class="answer" onClick="selectAnswer(this)" data-index="${answer.originalIndex}">
             <img src="${answer.image}">
             <h3>${answer.text}</h3>
         </li>   
@@ -144,11 +145,10 @@ function getQuestionByTitle(questionTitle) {
     return currentQuestion;
 }
 
-function isCorrect(answerEl, correctAnswer) {
-    const answerImage = answerEl.querySelector('img').src;
-    const answerTitle = answerEl.querySelector('h3').innerHTML;
+function isCorrect(answerEl, question) {
+    const answerIndex = answerEl.dataset.index;
 
-    return answerImage === correctAnswer.image && answerTitle === correctAnswer.text;
+    return question.answers[answerIndex].isCorrectAnswer;
 }
 
 const wasNotAnswered = questionEl => questionEl.querySelector('.selected') === null;
@@ -164,11 +164,10 @@ function scrollToNextQuestion() {
 
 function checkAnswer(answerEl) {
     const currentQuestionEl = answerEl.parentNode.parentNode;
-    const currentQuestion = getQuestionByTitle(currentQuestionEl.querySelector('.question-top').innerText);
+    const questionIndex = currentQuestionEl.dataset.index;
+    const currentQuestion = currentQuizz.questions[questionIndex];
     
-    const [ correctAnswer ] = currentQuestion.answers.filter(answer => answer.isCorrectAnswer);
-
-    if(isCorrect(answerEl, correctAnswer)) {
+    if(isCorrect(answerEl, currentQuestion)) {
         answerEl.classList.add('correct');
     } else {
         answerEl.classList.add('incorrect');
