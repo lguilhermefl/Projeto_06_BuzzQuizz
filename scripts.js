@@ -181,3 +181,19 @@ function selectAnswer(answerEl) {
 
     scrollToNextQuestion();
 }
+
+function resetQuizz() {
+    qtyAnswers = 0;
+    qtyCorrectAnswers = 0;
+    score = 0;
+
+    renderQuizzQuestions(currentQuizz.questions);
+    
+    document.querySelector('.question').scrollIntoView();
+}
+
+function openQuizzesList() {
+    document.querySelector('.quizz-details').classList.add('hidden');
+    document.querySelector('.quizzes-list').classList.remove('hidden');
+    document.querySelector('.top').scrollIntoView();
+}
