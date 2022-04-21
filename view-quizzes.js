@@ -239,8 +239,11 @@ function resetQuizz() {
 }
 
 function openQuizzesList() {
+    getQuizzes();
+
     document.querySelector('.quizz-details').classList.add('hidden');
     document.querySelector('.quizzes-list').classList.remove('hidden');
+
     document.querySelector('.top').scrollIntoView();
 }
 
