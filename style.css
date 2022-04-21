@@ -87,13 +87,19 @@ body {
 
 .quizz {
     width: 32.5%;
+    margin-bottom: 15px;
     position: relative;
+}
+
+.quizz:hover {
+    cursor: pointer;
 }
 
 .quizz img {
     width: 100%;
     border-radius: 5px;
-    
+    height: 181px;
+    object-fit: cover;
 }
 
 .overlay {
@@ -414,7 +420,6 @@ button.back-home {
     }
     .quizz {
         width: 100%;
-        margin-bottom: 15px;
     }
     .your-quizzes {
         margin-top: 35px;

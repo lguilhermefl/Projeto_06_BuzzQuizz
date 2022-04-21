@@ -7,7 +7,40 @@ let qtyAnswers = 0;
 let qtyCorrectAnswers = 0;
 let score = 0;
 
+function renderQuizzesInElement(quizzess, element) {
+    const quizzesTemplate = quizzess.map(quizz => {
+        return `
+            <div class="quizz" onClick="getQuizzDetails(${quizz.id})">
+                <img src="${quizz.image}" />
+                <div class="overlay">
+                    <h4 class="title">${quizz.title}</h4>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    element.innerHTML = quizzesTemplate;
+}
+
+function getQuizzes() {
+    axios
+        .get(`${API_URL}/quizzes`)
+        .then(response => {
+            renderQuizzesInElement(response.data, document.querySelector('.all-quizzes .quizzes'));
+        })
+        .catch(() => {
+            document.querySelector('.quizzes-list').innerHTML = `<p>Não foi possível obter a lista de quizzes</p>`;
+        });
+}
+
+function openQuizzDetails() {
+    document.querySelector('.quizzes-list').classList.add('hidden');
+    document.querySelector('.quizz-details').classList.remove('hidden');
+}
+
 function getQuizzDetails(idQuizz) {
+    openQuizzDetails();
+
     const loadingMessage = document.querySelector('.quizz-details .loading-message');
     loadingMessage.classList.remove('hidden');
 
@@ -197,3 +230,5 @@ function openQuizzesList() {
     document.querySelector('.quizzes-list').classList.remove('hidden');
     document.querySelector('.top').scrollIntoView();
 }
+
+getQuizzes();
