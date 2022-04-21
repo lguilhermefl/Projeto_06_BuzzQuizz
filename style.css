@@ -166,6 +166,7 @@ ion-icon:hover {
     margin: 0 10px;
     text-align: center;
     color: #fff;
+    word-break: break-all;
 }
 
 .questions {
@@ -191,6 +192,7 @@ ion-icon:hover {
     background-color: #434CA0;
     margin-bottom: 20px;
     text-align: center;
+    word-break: break-all;
 }
 
 .answers {
@@ -261,6 +263,7 @@ ion-icon:hover {
     font-size: 18px;
     line-height: 25px;
     color: #484848;
+    word-break: break-all;
 }
 
 .end-buttons {
