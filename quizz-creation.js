@@ -48,6 +48,13 @@ function backHome() {
 
 function loadQuizzRules() {
     const elContainer = document.querySelector(".container");
+    quizz = {
+        title: "",
+        image: "",
+        questions: "",
+        levels: ""
+    };
+    
     elContainer.innerHTML += `
         <div class="quizz-creation">
             <div class="page-form">
@@ -176,13 +183,6 @@ function loadQuizzFinished() {
 }
 
 function goToCreateQuestions() {
-    
-    quizz = {
-        title: "",
-        image: "",
-        questions: "",
-        levels: ""
-    };
 
     elQuizzRules = document.querySelector(".quizz-creation .page-form:nth-child(1)");
     const titleQuizz = elQuizzRules.querySelector("input:nth-child(1)").value;

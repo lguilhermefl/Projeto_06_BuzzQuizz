@@ -89,7 +89,7 @@ ion-icon:hover {
 .quizzes {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 1.25%;
     margin-top: 10px;
 }
 
@@ -411,6 +411,14 @@ textarea::placeholder {
     margin-bottom: 0;
 }
 
+.quizz-finished {
+    width: 100%;
+}
+
+.quizz-finished .quizz img {
+    height: 100%;
+}
+
 button.back-home {
     margin-top: 10px;
     background-color: #fafafa;
@@ -434,7 +442,10 @@ button.back-home {
     .create-quizz {
         margin-bottom: 35px;
     }
-
+    .quizzes {
+        gap: unset;
+    }
+    
     /* tela do quizz */
     .quizz-top h2 {
         font-size: 18px;
