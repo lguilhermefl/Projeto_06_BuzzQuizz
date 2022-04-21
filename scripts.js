@@ -1,7 +1,11 @@
 const API_URL = "https://mock-api.driven.com.br/api/v6/buzzquizz";
 const TWO_SECONDS = 2 * 1000;
+const ONE_HUNDRED = 100;
 
 let currentQuizz = {};
+let qtyAnswers = 0;
+let qtyCorrectAnswers = 0;
+let score = 0;
 
 function getQuizzDetails(idQuizz) {
     const loadingMessage = document.querySelector('.quizz-details .loading-message');
@@ -101,10 +105,6 @@ function scrollToNextQuestion() {
 }
 
 function checkAnswer(answerEl) {
-    if(!answerEl.classList.contains('selected')) {
-        answerEl.classList.add('disabled');
-    }
-
     const currentQuestionEl = answerEl.parentNode.parentNode;
     const currentQuestion = getQuestionByTitle(currentQuestionEl.querySelector('.question-top').innerText);
     
@@ -117,6 +117,53 @@ function checkAnswer(answerEl) {
     }
 
     answerEl.removeAttribute('onClick');
+
+    if(!answerEl.classList.contains('selected')) {
+        answerEl.classList.add('disabled');
+    } else if(answerEl.classList.contains('correct')) {
+        qtyCorrectAnswers++;
+    }
+}
+
+function calculateScore() {
+    score = Math.round(qtyCorrectAnswers * ONE_HUNDRED / qtyAnswers);
+}
+
+const getAscendingLevels = () => [...currentQuizz.levels].sort((level1, level2) => level1.minValue - level2.minValue);
+
+function getLevel() {
+    const ascendingLevels = getAscendingLevels();
+
+    let level = null;
+
+    ascendingLevels.forEach(currentLevel => {
+        if(score >= currentLevel.minValue) {
+            level = currentLevel;
+        }
+    });
+
+    return level;
+}
+
+function renderQuizzResult() {
+    const level = getLevel();
+
+    const quizzResultTemplate = `
+        <li class="question result">
+            <div class="question-top">
+                ${score}% de acerto: ${level.title}
+            </div>
+
+            <div class="result-details">
+                <img src="${level.image}">
+                <p>
+                    ${level.text}
+                </p>
+            </div>
+        </li>
+    `;
+
+    document.querySelector('.questions').innerHTML += quizzResultTemplate;
 }
 
 function selectAnswer(answerEl) {
@@ -125,6 +172,12 @@ function selectAnswer(answerEl) {
     const answersEl = Array.from(answerEl.parentNode.querySelectorAll('.answer'));
 
     answersEl.forEach(checkAnswer);
+    qtyAnswers = document.querySelectorAll('.answer.selected').length;
+
+    if(qtyAnswers === currentQuizz.questions.length) {
+        calculateScore();
+        renderQuizzResult();
+    }
 
     scrollToNextQuestion();
 }
