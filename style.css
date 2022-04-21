@@ -252,7 +252,7 @@ body {
 .end-buttons {
     display: flex;
     flex-direction: column;
-    margin-top: 58px 0 86px 0;
+    margin: 58px 0 86px 0;
 }
 
 .end-buttons button {
