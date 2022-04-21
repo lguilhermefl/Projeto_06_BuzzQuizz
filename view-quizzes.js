@@ -103,7 +103,7 @@ function renderQuizzQuestions(questions) {
                 </ul>
             </li>
         `;
-    });
+    }).join('');
 
     document.querySelector('.questions').innerHTML = quizzQuestionsTemplate;
 }
