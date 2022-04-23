@@ -7,8 +7,18 @@ let qtyAnswers = 0;
 let qtyCorrectAnswers = 0;
 let score = 0;
 
-function renderQuizzesInElement(quizzess, element) {
-    const quizzesTemplate = quizzess.map(quizz => {
+function getUserQuizzIds() {
+    let userQuizzIds = JSON.parse(localStorage.getItem("userQuizzIds"));
+
+    if(!userQuizzIds) {
+        userQuizzIds = [];
+    }
+
+    return userQuizzIds;
+}
+
+function renderAllQuizzes(quizzes) {
+    const quizzesTemplate = quizzes.map(quizz => {
         return `
             <div class="quizz" onClick="getQuizzDetails(${quizz.id})">
                 <img src="${quizz.image}" />
@@ -19,39 +29,69 @@ function renderQuizzesInElement(quizzess, element) {
         `;
     }).join('');
 
-    element.innerHTML = quizzesTemplate;
+    document.querySelector('.all-quizzes .quizzes').innerHTML = quizzesTemplate;
 }
 
-const getUserQuizzes = (userQuizzesIds, quizzes) => quizzes.filter(quizz => userQuizzesIds.includes(quizz.id));
+const getQuizzesError = () => document.querySelector('.quizzes-list').innerHTML = `<p>Não foi possível obter a lista de quizzes</p>`;
 
-const getAllQuizzes = (userQuizzIds, quizzes) => quizzes.filter(quizz => !userQuizzIds.includes(quizz.id));
+const isNotUserQuizz = quizz => {
+    const userQuizzIds = getUserQuizzIds();
 
-function getQuizzes() {
+    return !userQuizzIds.includes(quizz.id);
+}
+
+function getAllQuizzes() {
     axios
         .get(`${API_URL}/quizzes`)
         .then(response => {
-            let userQuizzIds = JSON.parse(localStorage.getItem("userQuizzIds"));
+            const quizzes = response.data.filter(isNotUserQuizz);
 
-            if(!userQuizzIds) {
-                userQuizzIds = [];
-            }
+            renderAllQuizzes(quizzes);
+        })
+        .catch(getQuizzesError);
+}
 
-            if(userQuizzIds.length > 0) {
+function getQuizzesById(quizzIds) {
+    const promises = quizzIds.map(id => axios.get(`${API_URL}/quizzes/${id}`));
+
+    return Promise.all(promises);
+}
+
+function renderUserQuizzes(quizzes) {
+    const quizzesTemplate = quizzes.map(quizz => {
+        return `
+            <div class="quizz" onClick="getQuizzDetails(${quizz.id})">
+                <img src="${quizz.image}" />
+                <div class="overlay">
+                    <h4 class="title">${quizz.title}</h4>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    document.querySelector('.your-quizzes .quizzes').innerHTML = quizzesTemplate;
+}
+
+function getUserQuizzes() {
+    const userQuizzIds = getUserQuizzIds();
+    
+    if(userQuizzIds.length > 0) {
+        getQuizzesById(userQuizzIds)
+            .then(responses => {
+                const userQuizzes = responses.map(response => response.data);
+
+                renderUserQuizzes(userQuizzes);
+
                 document.querySelector('.create-quizz').classList.add('hidden');
                 document.querySelector('.your-quizzes').classList.remove('hidden');
-            }
+            })
+            .catch(getQuizzesError);
+    }
+}
 
-            const quizzes = response.data;
-
-            const userQuizzes = getUserQuizzes(userQuizzIds, quizzes);
-            const allQuizzes = getAllQuizzes(userQuizzIds, quizzes);
-
-            renderQuizzesInElement(userQuizzes, document.querySelector('.your-quizzes .quizzes'));
-            renderQuizzesInElement(allQuizzes, document.querySelector('.all-quizzes .quizzes'));
-        })
-        .catch(() => {
-            document.querySelector('.quizzes-list').innerHTML = `<p>Não foi possível obter a lista de quizzes</p>`;
-        });
+function getQuizzes() {
+    getAllQuizzes();
+    getUserQuizzes();
 }
 
 function openQuizzDetails() {
