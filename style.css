@@ -254,7 +254,6 @@ ion-icon:hover {
 
 .result-details {
     display: flex;
-    justify-content: space-between;
 }
 
 .result-details img {
@@ -440,6 +439,9 @@ button.back-home {
     }
     .quizz {
         width: 100%;
+    }
+    .button-plus {
+        justify-content: space-between;
     }
     .your-quizzes {
         margin-top: 35px;
