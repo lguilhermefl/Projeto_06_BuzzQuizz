@@ -3,13 +3,9 @@ const API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes";
 let qtyQuestions;
 let qtyLevels;
 
-let quizz = {
-    title: "",
-    image: "",
-    questions: "",
-    levels: ""
-};
+let quizz;
 let userQuizzesIdList = [];
+let userQuizzesKeyList = [];
 
 let elQuizzRules;
 let elQuizzQuestions;
@@ -45,6 +41,7 @@ function backHome() {
     
     elQuizzList.classList.remove("hidden");
     elQuizzFinished.classList.add("hidden");
+    getUserQuizzes();
 }
 
 function loadQuizzRules() {
@@ -375,11 +372,57 @@ function sendQuizz() {
 
 function getUserQuizz(response) {
     const quizzId = response.data.id;
+    const quizzKey = response.data.key;
     let idListLocal = JSON.parse(localStorage.getItem("userQuizzIds"));
+    let keyListLocal = JSON.parse(localStorage.getItem("userQuizzKeys"));
+
     if(idListLocal !== null) {
         userQuizzesIdList = idListLocal;
+        userQuizzesKeyList = keyListLocal;
     }
     userQuizzesIdList.push(quizzId);
+    userQuizzesKeyList.push(quizzKey);
     
     localStorage.setItem("userQuizzIds", JSON.stringify(userQuizzesIdList));
+    localStorage.setItem("userQuizzKeys", JSON.stringify(userQuizzesKeyList));
 }
+
+/*function addDeleteButton() {
+    Array.from(document.querySelectorAll(".your-quizzes .quizzes .quizz"),
+        quizz => quizz.innerHTML += `
+            <div class="delete-edit">
+                <img src="img/white-teste.svg" alt="edit" onclick="deleteQuizz()">
+            </div>
+            `
+    );
+}*/
+/*
+function deleteQuizz(el) {
+    let idQuizzClicked = el.parentNode.querySelector(".overlay").getAttribute('onclick');
+    const indexStart = idQuizzClicked.indexOf("(") + 1;
+    const indexEnd = idQuizzClicked.indexOf(")");
+    idQuizzClicked = Number(idQuizzClicked.slice(indexStart, indexEnd));
+
+    userQuizzesIdList = [];
+    userQuizzesKeyList = [];
+
+    const userQuizzesIds = JSON.parse(localStorage.getItem("userQuizzIds"));
+    const userQuizzesKeys = JSON.parse(localStorage.getItem("userQuizzKeys"));
+
+    for(let i = 0; i < userQuizzesIds.length; i++) {
+        if(userQuizzesIds[i] === idQuizzClicked) {
+            axios.delete(`${API}/${idQuizzClicked}`, {
+                headers: {
+                  key: userQuizzesKeys[i]
+                }
+            });
+        } else {
+            userQuizzesIdList.push(userQuizzesIds[i]);
+            userQuizzesKeyList.push(userQuizzesKeys[i]);
+        }
+    }
+
+    localStorage.setItem("userQuizzIds", JSON.stringify(userQuizzesIdList));
+    localStorage.setItem("userQuizzKeys", JSON.stringify(userQuizzesKeyList));
+}*/
+
