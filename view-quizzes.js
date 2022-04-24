@@ -6,7 +6,6 @@ let currentQuizz = {};
 let qtyAnswers = 0;
 let qtyCorrectAnswers = 0;
 let score = 0;
-let teste2;
 
 function getUserQuizzIds() {
     let userQuizzIds = JSON.parse(localStorage.getItem("userQuizzIds"));
