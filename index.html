@@ -15,7 +15,13 @@
         <div class="top">
             <h1>BuzzQuizz</h1>
         </div>
-        <div class="quizzes-list">
+
+        <div class="loading-container">
+            <img src="img/loading.gif" alt="Loading gif">
+            <h3>Carregando...</h3>
+        </div>
+
+        <div class="quizzes-list hidden">
             <div class="create-quizz">
                 <p>Você não criou nenhum quizz ainda :(</p>
                 <button onclick="loadQuizzRules()">Criar Quizz</button>
@@ -35,7 +41,6 @@
 
         <!-- INICIO TELA DO QUIZZ -->
         <div class="quizz-details hidden">
-            <p class="loading-message hidden">Carregando...</p>
             <p class="error-message hidden">Não foi possível pegar o quizz</p>
 
             <div class="quizz-top"></div>

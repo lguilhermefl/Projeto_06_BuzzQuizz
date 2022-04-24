@@ -89,32 +89,58 @@ function getUserQuizzes() {
     }
 }
 
+function hideLoadingDiv() {
+    const element = document.querySelector('.loading-container');
+    
+    if(!element.classList.contains('hidden')) {
+        element.classList.add('hidden');
+    }
+}
+
+function showLoadingDiv() {
+    const contentDivClasses = ['.quizzes-list', '.quizz-details'];
+
+    contentDivClasses.forEach(divClass => {
+        const element = document.querySelector(divClass);
+
+        if(!element.classList.contains('hidden')) {
+            element.classList.add('hidden');
+        }
+    });
+    
+    document.querySelector('.loading-container').classList.remove('hidden');
+}
+
 function getQuizzes() {
+    showLoadingDiv();
+
     getAllQuizzes();
     getUserQuizzes();
+
+    hideLoadingDiv();
+    document.querySelector('.quizzes-list').classList.remove('hidden');
 }
 
 function openQuizzDetails() {
+    hideLoadingDiv();
+
     document.querySelector('.quizzes-list').classList.add('hidden');
     document.querySelector('.quizz-details').classList.remove('hidden');
 }
 
 function getQuizzDetails(idQuizz) {
-    openQuizzDetails();
+    showLoadingDiv();
 
     qtyAnswers = 0;
     qtyCorrectAnswers = 0;
     score = 0;
-
-    const loadingMessage = document.querySelector('.quizz-details .loading-message');
-    loadingMessage.classList.remove('hidden');
-
+    
     axios
         .get(`${API_URL}/quizzes/${idQuizz}`)
         .then(response => {
-            loadingMessage.classList.add('hidden');
             currentQuizz = response.data;
             renderQuizz();
+            openQuizzDetails();
         })
         .catch(() => document.querySelector('.quizz-details .error-message').classList.remove('hidden'));
 }
@@ -281,9 +307,7 @@ function resetQuizz() {
 function openQuizzesList() {
     getQuizzes();
 
-    document.querySelector('.quizz-details').classList.add('hidden');
     document.querySelector('.quizzes-list').classList.remove('hidden');
-
     document.querySelector('.top').scrollIntoView();
 }
 
