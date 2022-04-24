@@ -140,6 +140,11 @@ function openQuizzDetails() {
 
     document.querySelector('.quizzes-list').classList.add('hidden');
     document.querySelector('.quizz-details').classList.remove('hidden');
+
+    if(document.querySelector(".quizz-creation")) {
+        document.querySelector(".quizz-creation").remove();
+    }
+    document.querySelector('.container').scrollIntoView();
 }
 
 function getQuizzDetails(idQuizz) {

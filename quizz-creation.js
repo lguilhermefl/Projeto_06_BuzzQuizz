@@ -37,10 +37,10 @@ function edit(el) {
 function backHome() {
     const elQuizzList = document.querySelector(".quizzes-list");
     const elQuizzCreation = document.querySelector(".quizz-creation");
-    const elQuizzFinished = elQuizzCreation.querySelector(".page-form:nth-child(4)");
     
     elQuizzList.classList.remove("hidden");
-    elQuizzFinished.classList.add("hidden");
+    elQuizzCreation.remove();
+    document.querySelector('.container').scrollIntoView();
     getUserQuizzes();
 }
 
