@@ -7,6 +7,19 @@ let qtyAnswers = 0;
 let qtyCorrectAnswers = 0;
 let score = 0;
 
+function initLocalStorage() {
+    const userQuizzesIds = localStorage.getItem("userQuizzIds");
+    const userQuizzesKeys = localStorage.getItem("userQuizzKeys");
+
+    if(!userQuizzesIds) {
+        localStorage.setItem("userQuizzIds", JSON.stringify([]));
+    }
+
+    if(!userQuizzesKeys) {
+        localStorage.setItem("userQuizzKeys", JSON.stringify([]));
+    }
+}
+
 function getUserQuizzIds() {
     let userQuizzIds = JSON.parse(localStorage.getItem("userQuizzIds"));
 
@@ -312,8 +325,6 @@ function openQuizzesList() {
     document.querySelector('.top').scrollIntoView();
 }
 
-getQuizzes();
-
 function addEditDeleteButtons() {
     Array.from(document.querySelectorAll(".your-quizzes .quizzes .quizz"),
         quizz => quizz.innerHTML += `
@@ -340,12 +351,13 @@ function deleteQuizz(el) {
     
         for(let i = 0; i < userQuizzesIds.length; i++) {
             if(userQuizzesIds[i] === idQuizzClicked) {
+                showLoadingDiv();
     
                 axios.delete(`${API_URL}/quizzes/${idQuizzClicked}`, {
                     headers: {
                         'Secret-Key': userQuizzesKeys[i]
                     }
-                });
+                }).then(() => getQuizzes());
             } else {
                 userQuizzesIdList.push(userQuizzesIds[i]);
                 userQuizzesKeyList.push(userQuizzesKeys[i]);
@@ -359,3 +371,6 @@ function deleteQuizz(el) {
 }
 
 const confirmDeletion = () => window.confirm("Deseja mesmo deletar este Quizz?");
+
+initLocalStorage();
+getQuizzes();
