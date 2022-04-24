@@ -20,9 +20,9 @@ function getUserQuizzIds() {
 function renderAllQuizzes(quizzes) {
     const quizzesTemplate = quizzes.map(quizz => {
         return `
-            <div class="quizz" onClick="getQuizzDetails(${quizz.id})">
+            <div class="quizz">
                 <img src="${quizz.image}" />
-                <div class="overlay">
+                <div class="overlay" onClick="getQuizzDetails(${quizz.id})">
                     <h4 class="title">${quizz.title}</h4>
                 </div>
             </div>
@@ -60,9 +60,9 @@ function getQuizzesById(quizzIds) {
 function renderUserQuizzes(quizzes) {
     const quizzesTemplate = quizzes.map(quizz => {
         return `
-            <div class="quizz" onClick="getQuizzDetails(${quizz.id})">
+            <div class="quizz">
                 <img src="${quizz.image}" />
-                <div class="overlay">
+                <div class="overlay" onClick="getQuizzDetails(${quizz.id})">
                     <h4 class="title">${quizz.title}</h4>
                 </div>
             </div>
@@ -70,6 +70,7 @@ function renderUserQuizzes(quizzes) {
     }).join('');
 
     document.querySelector('.your-quizzes .quizzes').innerHTML = quizzesTemplate;
+    addEditDeleteButtons();
 }
 
 function getUserQuizzes() {
@@ -312,3 +313,49 @@ function openQuizzesList() {
 }
 
 getQuizzes();
+
+function addEditDeleteButtons() {
+    Array.from(document.querySelectorAll(".your-quizzes .quizzes .quizz"),
+        quizz => quizz.innerHTML += `
+            <div class="delete-edit">
+                <img src="img/white-edit.svg" alt="edit" onclick="editQuizz(this)">
+                <img src="img/delete.svg" alt="delete" onclick="deleteQuizz(this)">
+            </div>
+            `
+    );
+}
+
+function deleteQuizz(el) {
+    if(confirmDeletion()) {
+        let idQuizzClicked = el.parentNode.parentNode.querySelector(".overlay").getAttribute('onclick');
+        const indexStart = idQuizzClicked.indexOf("(") + 1;
+        const indexEnd = idQuizzClicked.indexOf(")");
+        idQuizzClicked = Number(idQuizzClicked.slice(indexStart, indexEnd));
+    
+        userQuizzesIdList = [];
+        userQuizzesKeyList = [];
+    
+        const userQuizzesIds = JSON.parse(localStorage.getItem("userQuizzIds"));
+        const userQuizzesKeys = JSON.parse(localStorage.getItem("userQuizzKeys"));
+    
+        for(let i = 0; i < userQuizzesIds.length; i++) {
+            if(userQuizzesIds[i] === idQuizzClicked) {
+    
+                axios.delete(`${API_URL}/quizzes/${idQuizzClicked}`, {
+                    headers: {
+                        'Secret-Key': userQuizzesKeys[i]
+                    }
+                });
+            } else {
+                userQuizzesIdList.push(userQuizzesIds[i]);
+                userQuizzesKeyList.push(userQuizzesKeys[i]);
+            }
+        }
+    
+        localStorage.setItem("userQuizzIds", JSON.stringify(userQuizzesIdList));
+        localStorage.setItem("userQuizzKeys", JSON.stringify(userQuizzesKeyList));
+        getUserQuizzes();
+    }
+}
+
+const confirmDeletion = () => window.confirm("Deseja mesmo deletar este Quizz?");

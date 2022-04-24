@@ -3,13 +3,9 @@ const API = "https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes";
 let qtyQuestions;
 let qtyLevels;
 
-let quizz = {
-    title: "",
-    image: "",
-    questions: "",
-    levels: ""
-};
+let quizz;
 let userQuizzesIdList = [];
+let userQuizzesKeyList = [];
 
 let elQuizzRules;
 let elQuizzQuestions;
@@ -45,6 +41,7 @@ function backHome() {
     
     elQuizzList.classList.remove("hidden");
     elQuizzFinished.classList.add("hidden");
+    getUserQuizzes();
 }
 
 function loadQuizzRules() {
@@ -375,11 +372,18 @@ function sendQuizz() {
 
 function getUserQuizz(response) {
     const quizzId = response.data.id;
+    const quizzKey = response.data.key;
     let idListLocal = JSON.parse(localStorage.getItem("userQuizzIds"));
+    let keyListLocal = JSON.parse(localStorage.getItem("userQuizzKeys"));
+
     if(idListLocal !== null) {
         userQuizzesIdList = idListLocal;
+        userQuizzesKeyList = keyListLocal;
     }
     userQuizzesIdList.push(quizzId);
+    userQuizzesKeyList.push(quizzKey);
     
     localStorage.setItem("userQuizzIds", JSON.stringify(userQuizzesIdList));
+    localStorage.setItem("userQuizzKeys", JSON.stringify(userQuizzesKeyList));
 }
+

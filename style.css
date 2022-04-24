@@ -99,7 +99,7 @@ ion-icon:hover {
     position: relative;
 }
 
-.quizz:hover {
+.quizz .overlay:hover {
     cursor: pointer;
 }
 
@@ -254,7 +254,6 @@ ion-icon:hover {
 
 .result-details {
     display: flex;
-    justify-content: space-between;
 }
 
 .result-details img {
@@ -456,6 +455,33 @@ button.back-home {
     color: #EC362D;
     text-align: center;
 }
+/* BOTÕES DE EDITAR E DELETAR QUIZZES */
+
+.delete-edit {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    padding: 15px 10px;
+    background-color: #EC362D;
+    border-radius: 10px 0px 0px 11px;
+    display: flex;
+    flex-direction: column;
+}
+
+.delete-edit img:first-child {
+    width: auto;
+    height: 18px;
+    margin-bottom: 15px;
+}
+
+.delete-edit img:last-child {
+    width: 18px;
+    height: 20px;
+}
+
+.delete-edit img:hover {
+    cursor: pointer;
+}
 
 @media (max-width: 1100px) {
     .quizzes-list {
@@ -464,6 +490,9 @@ button.back-home {
     }
     .quizz {
         width: 100%;
+    }
+    .button-plus {
+        justify-content: space-between;
     }
     .your-quizzes {
         margin-top: 35px;
