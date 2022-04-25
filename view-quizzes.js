@@ -1,4 +1,5 @@
 const API_URL = "https://mock-api.driven.com.br/api/v6/buzzquizz";
+const FIVE_HUNDRED = 500;
 const TWO_SECONDS = 2 * 1000;
 const ONE_HUNDRED = 100;
 
@@ -131,24 +132,25 @@ function getQuizzes() {
     getAllQuizzes();
     getUserQuizzes();
 
-    hideLoadingDiv();
-    document.querySelector('.quizzes-list').classList.remove('hidden');
+    setTimeout(hideLoadingDiv, FIVE_HUNDRED);
+    setTimeout(() => {document.querySelector('.quizzes-list').classList.remove('hidden');}, FIVE_HUNDRED); 
 }
 
 function openQuizzDetails() {
-    hideLoadingDiv();
-
-    document.querySelector('.quizzes-list').classList.add('hidden');
-    document.querySelector('.quizz-details').classList.remove('hidden');
-
+    
     if(document.querySelector(".quizz-creation")) {
         document.querySelector(".quizz-creation").remove();
     }
-    document.querySelector('.container').scrollIntoView();
+    showLoadingDiv();
+    setTimeout(() => {hideLoadingDiv();
+        document.querySelector('.quizzes-list').classList.add('hidden');
+        document.querySelector('.quizz-details').classList.remove('hidden');
+    
+    
+        document.querySelector('.container').scrollIntoView();}, FIVE_HUNDRED) 
 }
 
 function getQuizzDetails(idQuizz) {
-    showLoadingDiv();
 
     qtyAnswers = 0;
     qtyCorrectAnswers = 0;
@@ -325,8 +327,6 @@ function resetQuizz() {
 
 function openQuizzesList() {
     getQuizzes();
-
-    document.querySelector('.quizzes-list').classList.remove('hidden');
     document.querySelector('.top').scrollIntoView();
 }
 

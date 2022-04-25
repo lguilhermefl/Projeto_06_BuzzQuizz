@@ -345,10 +345,6 @@ textarea::placeholder {
     color: #000;
 }
 
-.quizz-creation div:first-child input:first-child {
-    margin-top: 0;
-}
-
 .page-form {
     margin: 70px auto;
     display: flex;
@@ -381,8 +377,26 @@ textarea::placeholder {
     font-size: 20px;
 }
 
+.form-box input {
+    width: 100%;
+}
+
 .form-box img {
     cursor: pointer;
+}
+
+.user-input {
+    margin-bottom: 0;
+}
+
+.input-error-msg {
+    color: #EC362D;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.input-error-bg {
+    background-color: #FFE9E9;
 }
 
 .edit-entry {
@@ -409,11 +423,18 @@ textarea::placeholder {
 .fields div {
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px;
 }
 
 .fields div:last-child {
     margin-bottom: 0;
+}
+
+.incorrect-answer {
+    margin-bottom: 15px;
+}
+
+.answers-creation {
+    margin-top: 10px;
 }
 
 .quizz-finished {
