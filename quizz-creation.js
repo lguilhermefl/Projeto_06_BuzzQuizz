@@ -42,7 +42,7 @@ function backHome() {
     getQuizzes();
 }
 
-function loadQuizzRules(userQuizzToEdit) {
+function loadQuizzRules() {
     hideLoadingDiv();
     const elContainer = document.querySelector(".container");
     quizz = {
@@ -89,7 +89,7 @@ function loadQuizzRules(userQuizzToEdit) {
     document.querySelector(".quizzes-list").classList.add("hidden");
 }
 
-function loadQuestionFields(userQuizzToEdit) {
+function loadQuestionFields() {
     const elQuizzCreation = document.querySelector(".quizz-creation");
     elQuizzCreation.innerHTML += `
         <div class="page-form hidden">
@@ -107,22 +107,22 @@ function loadQuestionFields(userQuizzToEdit) {
             </div>
             <div class="fields hidden">
                 <div>
-                    <div class="input-error">
+                    <div class="user-input">
                         <input type="text" placeholder="Texto da pergunta">
                         <p class="input-error-msg hidden">A pergunta precisa ter ao menos 20 caracteres</p>
                     </div>
-                    <div class="input-error">
+                    <div class="user-input">
                         <input type="text" placeholder="Cor de fundo da pergunta">
                         <p class="input-error-msg hidden">A cor precisa ser em formato hexadecimal (#000000)</p>
                     </div>
                 </div>
                 <div class="answers-creation">
                     <span>Resposta Correta</span>
-                    <div class="input-error">
+                    <div class="user-input">
                         <input type="text" placeholder="Resposta correta">
                         <p class="input-error-msg hidden">A resposta correta é um campo obrigatório</p>
                     </div>
-                    <div class="input-error">
+                    <div class="user-input">
                         <input type="text" placeholder="URL da imagem">
                         <p class="input-error-msg hidden">O valor informado não é uma URL válida</p>
                     </div>
@@ -130,31 +130,31 @@ function loadQuestionFields(userQuizzToEdit) {
                 <div class="answers-creation">
                     <span>Respostas Incorretas</span>
                     <div class="incorrect-answer">
-                        <div class="input-error">
+                        <div class="user-input">
                             <input type="text" placeholder="Resposta incorreta 1">
                             <p class="input-error-msg hidden">Informe ao menos uma resposta incorreta</p>
                         </div>
-                        <div class="input-error">
+                        <div class="user-input">
                             <input type="text" placeholder="URL da imagem 1">
                             <p class="input-error-msg hidden">O valor informado não é uma URL válida</p>
                         </div>
                     </div>
                     <div class="incorrect-answer">
-                        <div class="input-error">
+                        <div class="user-input">
                             <input type="text" placeholder="Resposta incorreta 2">
                             <p class="input-error-msg hidden">Informe a resposta incorreta</p>
                         </div>
-                        <div class="input-error">
+                        <div class="user-input">
                             <input type="text" placeholder="URL da imagem 2">
                             <p class="input-error-msg hidden">O valor informado não é uma URL válida</p>
                         </div>
                     </div>
                     <div class="incorrect-answer">
-                        <div class="input-error">
+                        <div class="user-input">
                             <input type="text" placeholder="Resposta incorreta 3">
                             <p class="input-error-msg hidden">Informe a resposta incorreta</p>
                         </div>
-                        <div class="input-error">
+                        <div class="user-input">
                             <input type="text" placeholder="URL da imagem 3">
                             <p class="input-error-msg hidden">O valor informado não é uma URL válida</p>
                         </div>
@@ -179,7 +179,7 @@ function loadQuestionFields(userQuizzToEdit) {
         .classList.remove("hidden");
 }
 
-function loadLevels(userQuizzToEdit) {
+function loadLevels() {
     const elQuizzCreation = document.querySelector(".quizz-creation");
     elQuizzCreation.innerHTML += `
         <div class="page-form hidden">
@@ -196,19 +196,19 @@ function loadLevels(userQuizzToEdit) {
                     <img src="img/edit.svg" alt="edit" onclick="edit(this)">
                 </div>
                 <div class="fields hidden">
-                    <div class="input-error">
+                    <div class="user-input">
                         <input type="text" placeholder="Título do nível">
                         <p class="input-error-msg hidden">O título de ter ao menos 10 caracteres</p>
                     </div>
-                    <div class="input-error">
+                    <div class="user-input">
                         <input type="text" placeholder="% de acerto mínima">
                         <p class="input-error-msg hidden">A % de acerto deve ser um número entre 0 e 100</p>
                     </div>
-                    <div class="input-error">
+                    <div class="user-input">
                         <input type="text" placeholder="URL da imagem do nível">
                         <p class="input-error-msg hidden">O valor informado não é uma URL válida</p>
                     </div>
-                    <div class="input-error">
+                    <div class="user-input">
                         <textarea type="text" placeholder="Descrição do nível"></textarea>
                         <p class="input-error-msg hidden">A descrição de ter ao menos 30 caracteres</p>
                     </div>
@@ -594,7 +594,7 @@ function finishQuizz(userQuizzToEdit) {
             });
         }
     }
-    console.log(levels);
+
     for (let i = 0; i < levels.length; i++) {
         if (levels[i].minValue === 0) {
             aux++;
