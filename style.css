@@ -25,6 +25,20 @@ ion-icon:hover {
     color: #fafafa;
     height: 70px;
     box-sizing: border-box;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+.top a {
+    text-decoration: none;
+    color: #fafafa;
+}
+
+.container {
+    display: flow-root;
+    margin-top: 70px;
 }
 
 .quizzes-list {
@@ -62,7 +76,6 @@ ion-icon:hover {
 }
 
 .your-quizzes {
-    margin-top: 70px;
     margin-bottom: 50px;
 }
 
@@ -516,7 +529,6 @@ button.back-home {
         justify-content: space-between;
     }
     .your-quizzes {
-        margin-top: 35px;
         margin-bottom: 35px;
     }
     .create-quizz {

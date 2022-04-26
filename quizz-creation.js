@@ -263,6 +263,19 @@ function loadQuizzFinished(response) {
     elQuizzFinished.classList.remove("hidden");
 }
 
+function addErrorMsg(cond, el) {
+    if(!cond) {
+        el.classList.add('input-error-bg');
+        el.parentNode.querySelector('.input-error-msg').classList.remove('hidden');
+    }
+    if(cond) {
+        if(el.classList.contains('input-error-bg')) {
+            el.classList.remove('input-error-bg');
+            el.parentNode.querySelector('.input-error-msg').classList.add('hidden');
+        }
+    }
+}
+
 function goToCreateQuestions(userQuizzToEdit) {
     elQuizzRules = document.querySelector(
         ".quizz-creation .page-form:nth-child(1)"
@@ -281,59 +294,17 @@ function goToCreateQuestions(userQuizzToEdit) {
     const qtyLevelsCond = qtyLevels >= 2;
 
     //MENSAGENS DE ERRO
-    if(!titleQuizzCond) {
-        elTitleQuizz.classList.add('input-error-bg');
-        elTitleQuizz.parentNode.querySelector('.input-error-msg').classList.remove('hidden');
-    }
 
-    if(titleQuizzCond) {
-        if(elTitleQuizz.classList.contains('input-error-bg')) {
-            elTitleQuizz.classList.remove('input-error-bg');
-            elTitleQuizz.parentNode.querySelector('.input-error-msg').classList.add('hidden');
-        }
-    }
-
-    if(!urlImgCond) {
-        elUrlImg.classList.add('input-error-bg');
-        elUrlImg.parentNode.querySelector('.input-error-msg').classList.remove('hidden');
-    }
-
-    if(urlImgCond) {
-        if(elUrlImg.classList.contains('input-error-bg')) {
-            elUrlImg.classList.remove('input-error-bg');
-            elUrlImg.parentNode.querySelector('.input-error-msg').classList.add('hidden');
-        }
-    }
-    
-    if(!qtyQuestionsCond) {
-        elQtyQuestions.classList.add('input-error-bg');
-        elQtyQuestions.parentNode.querySelector('.input-error-msg').classList.remove('hidden');
-    }
-
-    if(qtyQuestionsCond) {
-        if(elQtyQuestions.classList.contains('input-error-bg')) {
-            elQtyQuestions.classList.remove('input-error-bg');
-            elQtyQuestions.parentNode.querySelector('.input-error-msg').classList.add('hidden');
-        }
-    }
-
-    if(!qtyLevelsCond) {
-        elQtyLevels.classList.add('input-error-bg');
-        elQtyLevels.parentNode.querySelector('.input-error-msg').classList.remove('hidden');
-    }
-
-    if(qtyLevelsCond) {
-        if(elQtyLevels.classList.contains('input-error-bg')) {
-            elQtyLevels.classList.remove('input-error-bg');
-            elQtyLevels.parentNode.querySelector('.input-error-msg').classList.add('hidden');
-        }
-    }
+    addErrorMsg(titleQuizzCond, elTitleQuizz);
+    addErrorMsg(urlImgCond, elUrlImg);
+    addErrorMsg(qtyQuestionsCond, elQtyQuestions);
+    addErrorMsg(qtyLevelsCond, elQtyLevels);
 
     //FIM MENSAGENS DE ERRO
 
     if (!(titleQuizzCond && urlImgCond && qtyQuestionsCond && qtyLevelsCond)) {
         alert("Preencha os dados corretamente por favor!");
-        document.querySelector('.top').scrollIntoView();
+        document.querySelector('.container').scrollIntoView();
     }
 
     if (titleQuizzCond && urlImgCond && qtyQuestionsCond && qtyLevelsCond) {
@@ -345,6 +316,16 @@ function goToCreateQuestions(userQuizzToEdit) {
         elQuizzQuestions.classList.remove("hidden");
         quizz.title = capitalizeFirstLetter(elTitleQuizz.value);
         quizz.image = elUrlImg.value;
+    }
+}
+
+function storeIncorrectAnswers(elIncorrectAnswer, elUrlImgIncorrect, questions, aux) {
+    if (elIncorrectAnswer.value !== "" && isValidURL(elUrlImgIncorrect.value)) {
+        questions[aux].answers.push({
+            text: elIncorrectAnswer.value,
+            image: elUrlImgIncorrect.value,
+            isCorrectAnswer: false
+        });
     }
 }
 
@@ -383,41 +364,11 @@ function goToCreateLevels() {
             incorrectAnswerCond;
 
         //MENSAGENS DE ERRO
-        if(!questionCond) {
-            elQuestion.classList.add('input-error-bg');
-            elQuestion.parentNode.querySelector('.input-error-msg').classList.remove('hidden');
-        }
-    
-        if(questionCond) {
-            if(elQuestion.classList.contains('input-error-bg')) {
-                elQuestion.classList.remove('input-error-bg');
-                elQuestion.parentNode.querySelector('.input-error-msg').classList.add('hidden');
-            }
-        }
 
-        if(!colorCond) {
-            elBackgroundColor.classList.add('input-error-bg');
-            elBackgroundColor.parentNode.querySelector('.input-error-msg').classList.remove('hidden');
-        }
-    
-        if(colorCond) {
-            if(elBackgroundColor.classList.contains('input-error-bg')) {
-                elBackgroundColor.classList.remove('input-error-bg');
-                elBackgroundColor.parentNode.querySelector('.input-error-msg').classList.add('hidden');
-            }
-        }
-
-        if(!correctAnswerCond) {
-            elCorrectAnswer.classList.add('input-error-bg');
-            elCorrectAnswer.parentNode.querySelector('.input-error-msg').classList.remove('hidden');
-        }
-    
-        if(correctAnswerCond) {
-            if(elCorrectAnswer.classList.contains('input-error-bg')) {
-                elCorrectAnswer.classList.remove('input-error-bg');
-                elCorrectAnswer.parentNode.querySelector('.input-error-msg').classList.add('hidden');
-            }
-        }
+        addErrorMsg(questionCond, elQuestion);
+        addErrorMsg(colorCond, elBackgroundColor);
+        addErrorMsg(correctAnswerCond, elCorrectAnswer);
+        addErrorMsg(urlImgCorrectCond, elUrlImgCorrect);
 
         if(!incorrectAnswerCond) {
             if(!(elIncorrectAnswer1.value !== "")) {
@@ -469,36 +420,16 @@ function goToCreateLevels() {
                 ]
             });
 
-            if (elIncorrectAnswer1.value !== "" && isValidURL(elUrlImgIncorrect1.value)) {
-                questions[aux].answers.push({
-                    text: elIncorrectAnswer1.value,
-                    image: elUrlImgIncorrect1.value,
-                    isCorrectAnswer: false
-                });
-            }
-
-            if (elIncorrectAnswer2.value !== "" && isValidURL(elUrlImgIncorrect2.value)) {
-                questions[aux].answers.push({
-                    text: elIncorrectAnswer2.value,
-                    image: elUrlImgIncorrect2.value,
-                    isCorrectAnswer: false
-                });
-            }
-
-            if (elIncorrectAnswer3.value !== "" && isValidURL(elUrlImgIncorrect3.value)) {
-                questions[aux].answers.push({
-                    text: elIncorrectAnswer3.value,
-                    image: elUrlImgIncorrect3.value,
-                    isCorrectAnswer: false
-                });
-            }
+            storeIncorrectAnswers(elIncorrectAnswer1, elUrlImgIncorrect1, questions, aux);
+            storeIncorrectAnswers(elIncorrectAnswer2, elUrlImgIncorrect2, questions, aux);
+            storeIncorrectAnswers(elIncorrectAnswer3, elUrlImgIncorrect3, questions, aux);
             aux++;
         }
     }
 
     if (questions.length < qtyQuestions) {
         alert("Preencha os dados corretamente por favor!");
-        document.querySelector('.top').scrollIntoView();
+        document.querySelector('.container').scrollIntoView();
     } else {
         quizz.questions = questions;
         loadLevels(userQuizzToEdit);
@@ -536,55 +467,14 @@ function finishQuizz(userQuizzToEdit) {
             titleCond && minSuccessRateCond && urlImgCond && descriptionCond;
         
         //MENSAGENS DE ERRO
-        if(!titleCond) {
-            elTitle.classList.add('input-error-bg');
-            elTitle.parentNode.querySelector('.input-error-msg').classList.remove('hidden');
-        }
-    
-        if(titleCond) {
-            if(elTitle.classList.contains('input-error-bg')) {
-                elTitle.classList.remove('input-error-bg');
-                elTitle.parentNode.querySelector('.input-error-msg').classList.add('hidden');
-            }
-        }
 
-        if(!minSuccessRateCond) {
-            elMinSuccessRate.classList.add('input-error-bg');
-            elMinSuccessRate.parentNode.querySelector('.input-error-msg').classList.remove('hidden');
-        }
-    
-        if(minSuccessRateCond) {
-            if(elMinSuccessRate.classList.contains('input-error-bg')) {
-                elMinSuccessRate.classList.remove('input-error-bg');
-                elMinSuccessRate.parentNode.querySelector('.input-error-msg').classList.add('hidden');
-            }
-        }
-
-        if(!urlImgCond) {
-            elUrlImg.classList.add('input-error-bg');
-            elUrlImg.parentNode.querySelector('.input-error-msg').classList.remove('hidden');
-        }
-    
-        if(urlImgCond) {
-            if(elUrlImg.classList.contains('input-error-bg')) {
-                elUrlImg.classList.remove('input-error-bg');
-                elUrlImg.parentNode.querySelector('.input-error-msg').classList.add('hidden');
-            }
-        }
-
-        if(!descriptionCond) {
-            elDescription.classList.add('input-error-bg');
-            elDescription.parentNode.querySelector('.input-error-msg').classList.remove('hidden');
-        }
-    
-        if(descriptionCond) {
-            if(elDescription.classList.contains('input-error-bg')) {
-                elDescription.classList.remove('input-error-bg');
-                elDescription.parentNode.querySelector('.input-error-msg').classList.add('hidden');
-            }
-        }
+        addErrorMsg(titleCond, elTitle);
+        addErrorMsg(minSuccessRateCond, elMinSuccessRate);
+        addErrorMsg(urlImgCond, elUrlImg);
+        addErrorMsg(descriptionCond, elDescription);
 
         //FIM MENSAGENS DE ERRO
+
         if (conditions) {
             levels.push({
                 title: elTitle.value,
@@ -602,6 +492,7 @@ function finishQuizz(userQuizzToEdit) {
     }
 
     //MENSAGENS DE ERRO
+
     if(aux === 0 && levels.length === qtyLevels) {
         Array.from(elQuizzLevels.querySelectorAll('[placeholder="% de acerto mínima"]'), el => {
             el.classList.add('input-error-bg');
@@ -619,6 +510,7 @@ function finishQuizz(userQuizzToEdit) {
             el.parentNode.querySelector('.input-error-msg').classList.add('hidden')
         });
     }
+
     //FIM MENSAGENS DE ERRO
 
     if (levels.length === qtyLevels && aux !== 0) {
@@ -630,7 +522,7 @@ function finishQuizz(userQuizzToEdit) {
         }
     } else {
         alert("Preencha os dados corretamente por favor!");
-        document.querySelector('.top').scrollIntoView();
+        document.querySelector('.container').scrollIntoView();
     }
 }
 
@@ -686,6 +578,20 @@ function renderRulesToEdit(userQuizzToEdit) {
         userQuizzToEdit.levels.length;
 }
 
+function renderIncorrectAnswersToEdit(elFormBox, aux) {
+
+    for(let i = 1; i <= 3; i++) {
+        if (userQuizzToEdit.questions[aux].answers[i]) {
+            elFormBox.querySelector(`[placeholder="Resposta incorreta ${i}"]`).value =
+                userQuizzToEdit.questions[aux].answers[i].text;
+            elFormBox.querySelector(`[placeholder="URL da imagem ${i}"]`).value =
+                userQuizzToEdit.questions[aux].answers[i].image;
+        }
+    
+    }
+
+}
+
 function renderQuestionsToEdit(userQuizzToEdit) {
     const elQuizzCreation = document.querySelector(".quizz-creation");
     elQuizzQuestions = elQuizzCreation.querySelector(".page-form:nth-child(2)");
@@ -703,28 +609,8 @@ function renderQuestionsToEdit(userQuizzToEdit) {
             userQuizzToEdit.questions[aux].answers[0].text;
         elFormBox.querySelector('[placeholder="URL da imagem"]').value =
             userQuizzToEdit.questions[aux].answers[0].image;
-
-        if (userQuizzToEdit.questions[aux].answers[1]) {
-            elFormBox.querySelector('[placeholder="Resposta incorreta 1"]').value =
-                userQuizzToEdit.questions[aux].answers[1].text;
-            elFormBox.querySelector('[placeholder="URL da imagem 1"]').value =
-                userQuizzToEdit.questions[aux].answers[1].image;
-        }
-
-        if (userQuizzToEdit.questions[aux].answers[2]) {
-            elFormBox.querySelector('[placeholder="Resposta incorreta 2"]').value =
-                userQuizzToEdit.questions[aux].answers[2].text;
-            elFormBox.querySelector('[placeholder="URL da imagem 2"]').value =
-                userQuizzToEdit.questions[aux].answers[2].image;
-        }
-
-        if (userQuizzToEdit.questions[aux].answers[3]) {
-            elFormBox.querySelector('[placeholder="Resposta incorreta 3"]').value =
-                userQuizzToEdit.questions[aux].answers[3].text;
-            elFormBox.querySelector('[placeholder="URL da imagem 3"]').value =
-                userQuizzToEdit.questions[aux].answers[3].image;
-        }
-
+        
+        renderIncorrectAnswersToEdit(elFormBox, aux);
         aux++;
     }
 }

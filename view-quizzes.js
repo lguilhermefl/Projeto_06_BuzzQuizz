@@ -327,7 +327,7 @@ function resetQuizz() {
 
 function openQuizzesList() {
     getQuizzes();
-    document.querySelector('.top').scrollIntoView();
+    document.querySelector('.container').scrollIntoView();
 }
 
 function addEditDeleteButtons() {
